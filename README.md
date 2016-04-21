@@ -26,7 +26,7 @@ the accuracy of this machine learning method is between 94.23% and 96.15%.
 Input:
 
 VL3 raw scores for  the first 125 amino acids for each sequence (sequences <125 
-amino acids will not be possible) in a comma-separated spreadsheet (*.csv):
+amino acids will not be possible) in a comma-separated spreadsheet (*.csv or *.txt):
 
 Sequence_Name1, Score_1, Score_2, Score_3, Score_4…
 Sequence_Name2, Score_1, Score_2, Score_3, Score_4…
@@ -34,7 +34,7 @@ Sequence_Name2, Score_1, Score_2, Score_3, Score_4…
 ####################
 Excecuting:
 
-$python CapClassifier.py <input_file.txt>
+$python CapClassifier.py input_file.csv
 
 
 ####################
