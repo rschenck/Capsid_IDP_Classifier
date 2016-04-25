@@ -131,7 +131,3 @@ with open('outFile.txt', 'w') as outFile:
 	for index, value in enumerate(classification):
 		print(testNames[index] + '\t' + value + '\t' + repr(proba[index]))
 		outFile.write(testNames[index] + '\t' + value + '\t' + repr(proba[index]) + '\n')
-
-
-
-
