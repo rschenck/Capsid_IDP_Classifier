@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-
+import imp
+ds = imp.load_source("dataset", './development/dataset.py')
 import csv
-from cap_classifier_data import VL3_ARRAY as vl3
 import pprint
 new_set = []
 # new_set.append(["accession","above 0.5","max_index", "to max", "to min", "type"])
+
+scores, type_array = ds.load_data()
 def find_max(group):
     x = 0.0
     for val in group:
@@ -18,12 +20,14 @@ def find_min(group):
         if val < x:
             x = val
     return x
-for row in vl3:
+
+for i in range(len(type_array)):
+    row = list(scores[i])
     new_row = []
-    # index 0 - accesion number
-    new_row.append(row[0])
-    max_val = find_max(row[1:-2])
-    min_val = find_min(row[1:-2])
+    # index 0 -
+    new_row.append(type_array[i])
+    max_val = find_max(row)
+    min_val = find_min(row)
     # index 1 - is the max_val > 0.5 ?
     if max_val > 0.5:
         new_row.append(1)
@@ -35,14 +39,14 @@ for row in vl3:
     # index 2 - the index of the max_val
     new_row.append(max_index)
     # index 3 - diff between point 1 and max
-    new_row.append((max_val - row[1]))
+    new_row.append((max_val - row[0]))
     # index 4 - slope between max and min
     new_row.append((min_val - max_val)/ (min_index - max_index))
     #  index 5 - max_val
     new_row.append(max_val)
-    new_row.append((max_val - row[1])/max_index)
+    if max_index > 0: new_row.append((max_val - row[0])/max_index)
+    if max_index == 0: new_row.append(0)
     new_row.append((min_index))
-    new_row.append(row[-1])
     new_set.append(new_row)
 
 
@@ -50,28 +54,31 @@ pp = pprint.PrettyPrinter(width=150)
 # pp.pprint(new_set)
 
 correct = 0
-accessions = []
+indexes = []
 incorrect = []
+index = 0
 for row in new_set:
     prediction = "Neither"
     # first branch -> it's either neither or not
     if (row[1] > 0) and (row[2] < 100):
         if row[3] >= 0.1:
             prediction = "Type B"
-            if row[2] < 26:
-                prediction = "Type A"
+            # if row[2] < 26:
+            #     prediction = "Type A"
         else:
             prediction = "Type A"
-    if prediction == row[-1]:
+    if prediction == row[0]:
         correct += 1
     else:
-        incorrect.append(row + [prediction])
-        accessions.append(row[0])
+        incorrect.append([prediction] + row + [index])
+        indexes.append(index)
+    index += 1
 
-# with open("troubling.csv", "wb") as f:
-#     writer = csv.writer(f)
-#     writer.writerows(sorted(incorrect))
-print float((correct / 261.0) * 100)
-print accessions
-pp.pprint(["accession","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index", "type", "prediction"])
-pp.pprint(sorted(incorrect))
+with open("problem_children.csv", "wb") as f:
+    writer = csv.writer(f)
+    writer.writerow(["prediction","type","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index", "entry #"])
+    writer.writerows(incorrect)
+print float((correct / 388.0) * 100)
+print indexes
+pp.pprint(["prediction","type","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index"])
+pp.pprint(incorrect)
