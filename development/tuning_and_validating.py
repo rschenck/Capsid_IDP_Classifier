@@ -12,7 +12,7 @@ from sklearn.metrics import roc_curve, auc
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 from scipy import interp
-from datasets import load_data
+from dataset import load_data
 
 # obtains the classifications from the final curated dataset
 def get_targets():
