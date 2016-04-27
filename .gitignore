@@ -5,3 +5,4 @@ all_vl3_scores_final.txt
 cap_classifier_data.pyc
 print_troubled_data.py
 tempOut.txt
+*.pyc
