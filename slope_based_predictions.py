@@ -21,6 +21,24 @@ def find_min(group):
             x = val
     return x
 
+def local_max_min(array):
+    slopes = []
+    vertices = [0]
+    for i in range(1, len(array)):
+        slopes.append(array[i] - array[i-1])
+    for i in range(1, len(slopes)):
+        if (slopes[i] > 0 and slopes[i - 1] < 0) or (slopes[i] < 0 and slopes[i - 1] > 0):
+            vertices.append(i)
+        if len(vertices) > 3:
+            return vertices
+    vertices.append(124)
+    return vertices
+def get_first_three_diffs(vertices, array):
+    diffs = []
+    for i in range(1,len(vertices)):
+        diffs.append(array[vertices[i]] - array[vertices[i - 1]])
+    return diffs
+
 for i in range(len(type_array)):
     row = list(scores[i])
     new_row = []
@@ -47,10 +65,13 @@ for i in range(len(type_array)):
     if max_index > 0: new_row.append((max_val - row[0])/max_index)
     if max_index == 0: new_row.append(0)
     new_row.append((min_index))
+    three = get_first_three_diffs(local_max_min(row),row)
+    for one in three:
+        new_row.append(one)
     new_set.append(new_row)
 
 
-pp = pprint.PrettyPrinter(width=150)
+pp = pprint.PrettyPrinter(width=250)
 # pp.pprint(new_set)
 
 correct = 0
@@ -61,6 +82,7 @@ for row in new_set:
     prediction = "Neither"
     # first branch -> it's either neither or not
     if (row[1] > 0) and (row[2] < 100):
+    # if (row[1] > 0):
         if row[3] >= 0.1:
             prediction = "Type B"
             # if row[2] < 26:
@@ -72,13 +94,17 @@ for row in new_set:
     else:
         incorrect.append([prediction] + row + [index])
         indexes.append(index)
+
     index += 1
 
-with open("problem_children.csv", "wb") as f:
+with open("slope_dataset.csv", "wb") as f:
     writer = csv.writer(f)
-    writer.writerow(["prediction","type","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index", "entry #"])
+    writer.writerow(["type","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index","diff one","diff two","diff three"])
+    writer.writerows(new_set)
+    writer.writerow(["incorrect predictions"])
+    writer.writerow(["prediction","type","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index","diff one","diff two","diff three","entry #"])
     writer.writerows(incorrect)
 print float((correct / 388.0) * 100)
 print indexes
-pp.pprint(["prediction","type","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index"])
+pp.pprint(["prediction","type","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index","diff one","diff two","diff three","index"])
 pp.pprint(incorrect)
