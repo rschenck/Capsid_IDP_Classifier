@@ -64,7 +64,7 @@ def get_diffs(values):
     for i in range(5 - len(diffs)):
         diffs.append(None)
     return diffs
-
+#create rows in new dataset
 for i in range(len(type_array)):
     row = list(scores[i])
     new_row = []
@@ -104,6 +104,7 @@ pp = pprint.PrettyPrinter(width=250)
 correct = 0
 indexes = []
 incorrect = []
+predictions = []
 index = 0
 for row in new_set:
     prediction = "Neither"
@@ -118,6 +119,7 @@ for row in new_set:
 
 # Based on additional diffs
     if row[1] > 0:
+        # decisions made from sifting through dataset
         if (row[8] > 0.1219871) or ((row[8] + row[9] if row[9] else row[8]) > 0):
             prediction = "Type B"
         else:
@@ -126,6 +128,7 @@ for row in new_set:
             condition += row[10] if row[10] else 0
             if condition > 0:
                 prediction = "Type B"
+    predictions.append(prediction)
     if prediction == row[0]:
         correct += 1
     else:
@@ -141,20 +144,8 @@ for row in new_set:
 #     writer.writerow(["incorrect predictions"])
 #     writer.writerow(["prediction","type","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index","diff 1","diff 2","diff 3","diff 4","diff 5","entry #"])
 #     writer.writerows(incorrect)
-# dope_dictionary = {}
-# count = 0
-# for row in new_set:
-#     arr = []
-#     arr.append(row[8])
-#     third = row[8] + row[9] if row[9] else row[8]
-#     arr.append(third)
-#     third += row[10] if row[10] else 0
-#     arr.append(third)
-#     dope_dictionary[acc[count]] = arr
-#     count += 1
-correct += 3
-print float((correct  / float(len(acc))) * 100)
-print indexes
-pp.pprint(["prediction","type","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index","diff 1","diff 2","diff 3","diff 4","diff 5","index"])
-pp.pprint(incorrect)
-# print dope_dictionary
+
+# print float((correct  / float(len(acc))) * 100)
+# print indexes
+# pp.pprint(["prediction","type","bool > 0.5", "max index", "diff max and 1", "slope to min", "max val", "slope to max", "min index","diff 1","diff 2","diff 3","diff 4","diff 5","index"])
+# pp.pprint(incorrect)
