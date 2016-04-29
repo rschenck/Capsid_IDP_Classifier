@@ -59,6 +59,7 @@ def get_diffs(values):
     for i in range(5 - len(diffs)):
         diffs.append(None)
     return diffs
+
 # this is a long, function enjoy
 def main(scores)
     new_set = []
