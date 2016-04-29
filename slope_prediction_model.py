@@ -1,18 +1,10 @@
 #!/usr/bin/env python3
 import numpy as np
 
-
 def find_max(group):
     x = 0.0
     for val in group:
         if val > x:
-            x = val
-    return x
-
-def find_min(group):
-    x = 1.0
-    for val in group:
-        if val < x:
             x = val
     return x
 
@@ -61,38 +53,21 @@ def get_diffs(values):
     return diffs
 
 # this is a long, function enjoy
-def main(scores)
+def main(scores):
     new_set = []
     #create rows in new dataset
     for i in range(len(scores)):
         row = list(scores[i])
         new_row = []
-
         max_val = find_max(row)
-        min_val = find_min(row)
         # index 0 - is the max_val > 0.5 ?
         if max_val > 0.53:
             new_row.append(1)
         else:
             new_row.append(0)
 
-        max_index = row.index(max_val)
-        min_index = row.index(min_val)
-        # index 1 - the index of the max_val
-        new_row.append(max_index)
-        # index 2 - diff between point 1 and max
-        new_row.append((max_val - row[0]))
-        # index 3 - slope between max and min
-        new_row.append((min_val - max_val)/ (min_index - max_index))
-        #  index 4 - max_val
-        new_row.append(max_val)
-        # index 5 - slope to max
-        if max_index > 0: new_row.append((max_val - row[0])/max_index)
-        if max_index == 0: new_row.append(0)
-        # index 6 - index of the min_val
-        new_row.append((min_index))
         diffs = get_diffs(local_max_min(row))
-        # index 7-11 - diffs or None
+        # index 1-5 - diffs or None
         for diff in diffs:
             new_row.append(diff)
         new_set.append(new_row)
@@ -103,14 +78,15 @@ def main(scores)
         prediction = "Neither"
 
     # Based on additional diffs
-        if row[1] > 0:
+        if row[0] > 0:
             # decisions made from sifting through dataset
-            if (row[8] > 0.1219871) or ((row[8] + row[9] if row[9] else row[8]) > 0):
+            if (row[1] > 0.1219871) or ((row[1] + row[2] if row[2] else row[1]) > 0):
                 prediction = "Type B"
             else:
                 prediction = "Type A"
-                condition = row[8] + row[9] if row[9] else row[8]
-                condition += row[10] if row[10] else 0
+                condition = (row[1] + row[2] if row[2] else row[1])
+                if row[3]:
+                    condition += row[3]
                 if condition > 0:
                     prediction = "Type B"
         predictions.append(prediction)
