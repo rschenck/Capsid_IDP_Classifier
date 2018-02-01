@@ -6,7 +6,7 @@ Contact: ryanschenck at mail dot usf dot edu
 
 Note: This is not a peer-reviewed published tool. Use at your own risk.
 
-##Summary:
+## Summary:
 
 This script is designed for high throughput classification of circular rep-encoding 
 eukaryotic single-stranded DNA (CRESS) viruses.
@@ -21,7 +21,7 @@ Type Predicted, an array showing the probabilities for that type classification.
 Based on the training and testing sets (80/20 split) taken from Rosario et. al. 2015 
 the accuracy of this machine learning method is between 94.23% and 96.15%. 
 
-##Input:
+## Input:
 
 VL3 raw scores for  the first 125 amino acids for each sequence (sequences <125 
 amino acids will not be possible) in a comma-separated spreadsheet (*.csv or *.txt):
@@ -29,12 +29,12 @@ amino acids will not be possible) in a comma-separated spreadsheet (*.csv or *.t
 Sequence_Name1, Score_1, Score_2, Score_3, Score_4…
 Sequence_Name2, Score_1, Score_2, Score_3, Score_4…
 
-##Excecuting:
+## Excecuting:
 
 $python CapClassifier.py input_file.csv
 
 
-##Notes:
+## Notes:
 
 In the extra folder is a webdriver for obtaining VL3 scores when given a fasta file of 
 multiple sequences. There are several dependencies for this script and thus will not be 
