@@ -26,8 +26,10 @@ the accuracy of this machine learning method is between 94.23% and 96.15%.
 VL3 raw scores for  the first 125 amino acids for each sequence (sequences <125 
 amino acids will not be possible) in a comma-separated spreadsheet (*.csv or *.txt):
 
-Sequence_Name1, Score_1, Score_2, Score_3, Score_4…
-Sequence_Name2, Score_1, Score_2, Score_3, Score_4…
+| Identifier     | Score.1           | Score.2           | Score.3           | Score.4           | Score.n           |
+| -------------- | ----------------- | ----------------- | ----------------- | ----------------- | ----------------- |
+| Sequence_Name1 | Score<sub>1</sub> | Score<sub>2</sub> | Score<sub>3</sub> | Score<sub>4</sub> | Score<sub>n</sub> |
+| Sequence_Name2 | Score<sub>1</sub> | Score<sub>2</sub> | Score<sub>3</sub> | Score<sub>4</sub> | Score<sub>n</sub> |
 
 ## Excecuting:
 
