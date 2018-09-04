@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1408708.svg)](https://doi.org/10.5281/zenodo.1408708)
 
-#Capsid_IDP_Classifier
+# Capsid_IDP_Classifier
 Machine Learning Classifier for CRESS-DNA viral capsids
 
 Built by Ryan O. Schenck
